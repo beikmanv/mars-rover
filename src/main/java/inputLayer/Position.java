@@ -1,4 +1,4 @@
-package org.example;
+package inputLayer;
 
 class Position{
     private int x;

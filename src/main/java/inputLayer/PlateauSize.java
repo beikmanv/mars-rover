@@ -1,4 +1,4 @@
-package org.example;
+package inputLayer;
 
 public class PlateauSize {
 }
