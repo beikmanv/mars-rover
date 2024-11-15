@@ -94,11 +94,11 @@ public class RotationTest {
         rover.rotate(Instruction.L);  // Rotate left again to face South
         rover.rotate(Instruction.L);  // Rotate left again to face East
 
-        // Act: Rotate the rover to the right (should face North)
+        // Act: Rotate the rover to the right (should face South)
         rover.rotate(Instruction.R);
 
-        // Assert: Check that the direction is now North
-        assertEquals(CompassDirection.N, rover.getDirection());  // Expect direction to be North
+        // Assert: Check that the direction is now South
+        assertEquals(CompassDirection.S, rover.getDirection());  // Expect direction to be North
     }
 
     @Test
@@ -109,11 +109,11 @@ public class RotationTest {
         rover.rotate(Instruction.L);  // Rotate left again to face South
         rover.rotate(Instruction.L);  // Rotate left again to face East
 
-        // Act: Rotate the rover to the left (should face South)
+        // Act: Rotate the rover to the left (should face North)
         rover.rotate(Instruction.L);
 
         // Assert: Check that the direction is now South
-        assertEquals(CompassDirection.S, rover.getDirection());  // Expect direction to be South
+        assertEquals(CompassDirection.N, rover.getDirection());  // Expect direction to be North
     }
 
     // Invalid Instruction
