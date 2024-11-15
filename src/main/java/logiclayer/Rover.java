@@ -1,17 +1,26 @@
 package logiclayer;
 
+import inputlayer.data.PlateauSize;
 import logiclayer.enums.CompassDirection;
 import logiclayer.enums.Instruction;
 
 import java.util.concurrent.ConcurrentMap;
 
 public class Rover {
-
+    private Position position;
+    private Plateau plateau;
     private CompassDirection direction;
 
     // Constructor for the default direction (e.g. North)
-    public Rover() {
-        this.direction = CompassDirection.N;
+    public Rover(Position position, Plateau plateau) {
+        this.position = position;
+        this. plateau = plateau;
+        this.direction = position.getFacing();
+    }
+
+    public void move() {
+        int x = position.getX();
+        int y = position.getY();
     }
 
     public void rotate(Instruction instruction) {
@@ -34,7 +43,12 @@ public class Rover {
         }
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     public CompassDirection getDirection() {
         return direction;
     }
+
 }
