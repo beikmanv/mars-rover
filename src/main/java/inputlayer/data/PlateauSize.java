@@ -7,8 +7,9 @@ public class PlateauSize {
     // Constructor that initializes width and height
     public PlateauSize(int width, int height) {
         if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException("Plateau dimensions must be positive integers.");
+            throw new IllegalArgumentException("Plateau dimensions must be positive numbers.");
         }
+
         this.width = width;
         this.height = height;
     }
@@ -20,14 +21,5 @@ public class PlateauSize {
 
     public int getHeight() {
         return height;
-    }
-
-    // Optional: override toString() for easy debugging
-    @Override
-    public String toString() {
-        return "PlateauSize{" +
-                "width=" + width +
-                ", height=" + height +
-                '}';
     }
 }

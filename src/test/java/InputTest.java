@@ -27,11 +27,11 @@ class InputTest {
     void testPlateauSize_Invalid() {
         // Arrange & Act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new PlateauSize(-1, 10);  // Invalid width
+            new PlateauSize(-9, 10);  // Invalid width
         });
 
         // Assert
-        assertEquals("Plateau dimensions must be positive integers.", exception.getMessage());
+        assertEquals("Plateau dimensions must be positive numbers.", exception.getMessage());
     }
 
     // Test InitialPosition constructor and methods
@@ -60,7 +60,7 @@ class InputTest {
         });
 
         // Assert
-        assertEquals("Position coordinates must be non-negative.", exception.getMessage());
+        assertEquals("Position coordinates must be positive X and Y.", exception.getMessage());
     }
 
     // Test CompassDirection enum

@@ -8,12 +8,11 @@ import javax.swing.text.Position;
 
 public class PositionParser {
 
-    public InitialPosition parsePosition( String inputPosition) {
+    public InitialPosition parsePosition(String inputPosition) {
         String[] splitPosition = inputPosition.trim().toUpperCase().split(" ");
 
         if (splitPosition.length != 3) {
             throw new IllegalArgumentException("Invalid position format. Expected: x y direction.");
-
         }
 
         //  Convert x and y into integers

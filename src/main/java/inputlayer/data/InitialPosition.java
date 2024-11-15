@@ -9,10 +9,10 @@ public class InitialPosition {
 
     public InitialPosition(int x, int y, CompassDirection facing) {
         if (x <= 0 || y <= 0) {
-            throw new IllegalArgumentException("Position coordinates must be non-negative.");
+            throw new IllegalArgumentException("Position coordinates must be positive X and Y.");
         }
         if (facing == null) {
-            throw new IllegalArgumentException("Facing direction must not be null.");
+            throw new IllegalArgumentException("Facing direction must be N, E, S or W.");
         }
         this.x = x;
         this.y = y;
