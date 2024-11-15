@@ -1,8 +1,6 @@
 package inputlayer.parsers;
 
-import inputlayer.enums.Instruction;
-
-import java.util.Arrays;
+import logiclayer.enums.Instruction;
 
 public class InstructionParser {
     public Instruction[] parseInstruction(String inputInstructions) {

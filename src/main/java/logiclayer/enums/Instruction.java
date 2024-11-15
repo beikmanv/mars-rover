@@ -1,4 +1,4 @@
-package inputlayer.enums;
+package logiclayer.enums;
 
 public enum Instruction {
         L,      // Left

@@ -1,6 +1,6 @@
 package inputlayer.data;
 
-import inputlayer.enums.CompassDirection;
+import logiclayer.enums.CompassDirection;
 
 public class InitialPosition {
     private int x;

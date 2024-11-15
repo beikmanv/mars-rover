@@ -1,10 +1,7 @@
 package inputlayer.parsers;
 
 import inputlayer.data.InitialPosition;
-import inputlayer.enums.CompassDirection;
-import inputlayer.enums.Instruction;
-
-import javax.swing.text.Position;
+import logiclayer.enums.CompassDirection;
 
 public class PositionParser {
 

@@ -1,7 +1,7 @@
 import inputlayer.data.PlateauSize;
 import inputlayer.data.InitialPosition;
-import inputlayer.enums.CompassDirection;
-import inputlayer.enums.Instruction;
+import logiclayer.enums.CompassDirection;
+import logiclayer.enums.Instruction;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
