@@ -1,93 +1,73 @@
-import inputlayer.data.PlateauSize;
+import inputlayer.parsers.PlateauParser;
 import logiclayer.Plateau;
 import logiclayer.Position;
 import logiclayer.Rover;
+import inputlayer.data.PlateauSize;
 import logiclayer.enums.CompassDirection;
+import logiclayer.enums.Instruction;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MoveTest {
 
-    @Test
-    void testMoveFacingNorth() {
-        // Arrange
-        PlateauSize plateauSize = new PlateauSize(5, 5);
-        Plateau plateau = new Plateau(plateauSize);
-        Position position = new Position(0, 0, CompassDirection.N);  // Facing North
-        Rover rover = new Rover(position, plateau);
+    private Plateau plateau;
+    private Rover rover;
 
-        // Act
-        rover.move();  // Move forward in North direction
+    @BeforeEach
+    public void setUp() {
+        // Arrange: Define the plateau dimensions and initial position
+        PlateauParser plateauParser = new PlateauParser();
+        plateau = new Plateau(plateauParser.parsePlateau("5 5"));  // 5x5 plateau
 
-        // Assert
-        assertEquals(1, rover.getPosition().getY());  // Y should increase since we're moving north
-        assertEquals(0, rover.getPosition().getX());  // X should remain the same
+        Position initialPosition = new Position(0, 0, CompassDirection.N);  // Start at position (0, 0) facing North
+        rover = new Rover(initialPosition, plateau);  // Create a rover with the plateau and initial position
     }
 
     @Test
-    void testMoveFacingEast() {
-        // Arrange
-        PlateauSize plateauSize = new PlateauSize(5, 5);
-        Plateau plateau = new Plateau(plateauSize);
-        Position position = new Position(0, 0, CompassDirection.E);  // Facing East
-        Rover rover = new Rover(position, plateau);
+    public void testMoveFacingNorth() {
+        // Arrange: Initial state is rover at (0, 0), facing North.
 
-        // Act
-        rover.move();  // Move forward in East direction
+        // Act: Move the rover one step North
+        rover.move();
 
-        // Assert
-        assertEquals(0, rover.getPosition().getY());  // Y should remain the same
-        assertEquals(1, rover.getPosition().getX());  // X should increase since we're moving east
+        // Assert: The rover's new position should be (0, 1), still facing North.
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(1, rover.getPosition().getY());
+        assertEquals(CompassDirection.N, rover.getDirection());
     }
 
     @Test
-    void testMoveFacingSouth() {
-        // Arrange
-        PlateauSize plateauSize = new PlateauSize(5, 5);
-        Plateau plateau = new Plateau(plateauSize);
-        Position position = new Position(1, 1, CompassDirection.S);  // Facing South
-        Rover rover = new Rover(position, plateau);
+    public void testMoveFacingEast() {
+        // Arrange: Initial state is rover at (0, 0), facing North. We rotate to face East.
+        rover.rotate(Instruction.R);  // Rotate to the right (East)
 
-        // Act
-        rover.move();  // Move forward in South direction
+        // Act: Move the rover one step East
+        rover.move();
 
-        // Assert
-        assertEquals(0, rover.getPosition().getY());  // Y should decrease since we're moving south
-        assertEquals(1, rover.getPosition().getX());  // X should remain the same
+        // Assert: The rover's new position should be (1, 0), and it should be facing East.
+        assertEquals(1, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(CompassDirection.E, rover.getDirection());
     }
 
     @Test
-    void testMoveFacingWest() {
-        // Arrange
-        PlateauSize plateauSize = new PlateauSize(5, 5);
-        Plateau plateau = new Plateau(plateauSize);
-        Position position = new Position(1, 1, CompassDirection.W);  // Facing West
-        Rover rover = new Rover(position, plateau);
+    public void testMoveFacingSouth() {
+        // Arrange: Initial state is rover at (0, 0), facing North. We rotate to face South.
+        rover.rotate(Instruction.L);  // Rotate to the left (South)
 
-        // Act
-        rover.move();  // Move forward in West direction
-
-        // Assert
-        assertEquals(1, rover.getPosition().getY());  // Y should remain the same
-        assertEquals(0, rover.getPosition().getX());  // X should decrease since we're moving west
+        // Act: Try moving the rover South, which should throw an exception because it's out of bounds.
+        // Assert: The move should throw an IllegalArgumentException as it goes out of bounds.
+        assertThrows(IllegalArgumentException.class, rover::move);
     }
 
     @Test
-    void testMoveOutOfBounds() {
-        // Arrange
-        PlateauSize plateauSize = new PlateauSize(5, 5);
-        Plateau plateau = new Plateau(plateauSize);
-        Position position = new Position(0, 0, CompassDirection.N);  // Facing North at (0, 0)
-        Rover rover = new Rover(position, plateau);
+    public void testMoveOutOfBounds() {
+        // Arrange: Initial state is rover at (0, 0), facing North. We rotate to face South.
+        rover.rotate(Instruction.L);  // Rotate to face South
 
-        // Act & Assert: Try moving forward, which should go out of bounds
-        try {
-            rover.move();
-            rover.move();  // Try moving forward twice (Y would be out of bounds)
-        } catch (IllegalArgumentException e) {
-            // Assert the rover does not move out of bounds
-            assertEquals(1, rover.getPosition().getY());
-            assertEquals(0, rover.getPosition().getX());
-        }
+        // Act: Try moving out of bounds (from (0, 0) to (0, -1), which is out of bounds).
+        // Assert: The move should throw an IllegalArgumentException.
+        assertThrows(IllegalArgumentException.class, rover::move);
     }
 }

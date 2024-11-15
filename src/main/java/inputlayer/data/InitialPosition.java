@@ -8,7 +8,7 @@ public class InitialPosition {
     private CompassDirection facing;
 
     public InitialPosition(int x, int y, CompassDirection facing) {
-        if (x <= 0 || y <= 0) {
+        if (x < 0 || y < 0) {
             throw new IllegalArgumentException("Position coordinates must be positive X and Y.");
         }
         if (facing == null) {

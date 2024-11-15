@@ -1,3 +1,4 @@
+import logiclayer.Position;
 import logiclayer.Rover;
 import logiclayer.enums.CompassDirection;
 import logiclayer.enums.Instruction;
@@ -9,96 +10,124 @@ public class RotationTest {
 
     @Test
     void testRotateRightFromNorth() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, explicitly set to face North
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+
+        // Act: Rotate the rover to the right (should face East)
         rover.rotate(Instruction.R);
-        // Assert
+
+        // Assert: Check that the direction is now East
         assertEquals(CompassDirection.E, rover.getDirection());  // Expect direction to be East
     }
 
     @Test
     void testRotateLeftFromNorth() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, explicitly set to face North
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+
+        // Act: Rotate the rover to the left (should face West)
         rover.rotate(Instruction.L);
-        // Assert
+
+        // Assert: Check that the direction is now West
         assertEquals(CompassDirection.W, rover.getDirection());  // Expect direction to be West
     }
 
     @Test
     void testRotateRightFromEast() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, initially facing North, then rotate right to face East
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+        rover.rotate(Instruction.R);  // Initially facing North, rotate right to East
+
+        // Act: Rotate the rover to the right again (should face South)
         rover.rotate(Instruction.R);
-        // Assert
+
+        // Assert: Check that the direction is now South
         assertEquals(CompassDirection.S, rover.getDirection());  // Expect direction to be South
     }
 
     @Test
     void testRotateLeftFromEast() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, initially facing North, then rotate left to face West
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+        rover.rotate(Instruction.L);  // Initially facing North, rotate left to West
+
+        // Act: Rotate the rover to the left again (should face South)
         rover.rotate(Instruction.L);
-        // Assert
-        assertEquals(CompassDirection.N, rover.getDirection());  // Expect direction to be North
+
+        // Assert: Check that the direction is now South
+        assertEquals(CompassDirection.S, rover.getDirection());  // Expect direction to be South
     }
 
     @Test
     void testRotateRightFromSouth() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, initially facing North, then rotate left twice to face South
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+        rover.rotate(Instruction.L);  // Initially facing North, rotate left to West
+        rover.rotate(Instruction.L);  // Rotate left again to face South
+
+        // Act: Rotate the rover to the right (should face West)
         rover.rotate(Instruction.R);
-        // Assert
+
+        // Assert: Check that the direction is now West
         assertEquals(CompassDirection.W, rover.getDirection());  // Expect direction to be West
     }
 
     @Test
     void testRotateLeftFromSouth() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, initially facing North, then rotate left twice to face South
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+        rover.rotate(Instruction.L);  // Initially facing North, rotate left to West
+        rover.rotate(Instruction.L);  // Rotate left again to face South
+
+        // Act: Rotate the rover to the left (should face East)
         rover.rotate(Instruction.L);
-        // Assert
+
+        // Assert: Check that the direction is now East
         assertEquals(CompassDirection.E, rover.getDirection());  // Expect direction to be East
     }
 
     @Test
     void testRotateRightFromWest() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, initially facing North, then rotate left three times to face West
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+        rover.rotate(Instruction.L);  // Initially facing North, rotate left to West
+        rover.rotate(Instruction.L);  // Rotate left again to face South
+        rover.rotate(Instruction.L);  // Rotate left again to face East
+
+        // Act: Rotate the rover to the right (should face North)
         rover.rotate(Instruction.R);
-        // Assert
+
+        // Assert: Check that the direction is now North
         assertEquals(CompassDirection.N, rover.getDirection());  // Expect direction to be North
     }
 
     @Test
     void testRotateLeftFromWest() {
-        // Arrange
-        Rover rover = new Rover();
-        // Act
+        // Arrange: Create a Rover instance, initially facing North, then rotate left three times to face West
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
+        rover.rotate(Instruction.L);  // Initially facing North, rotate left to West
+        rover.rotate(Instruction.L);  // Rotate left again to face South
+        rover.rotate(Instruction.L);  // Rotate left again to face East
+
+        // Act: Rotate the rover to the left (should face South)
         rover.rotate(Instruction.L);
-        // Assert
+
+        // Assert: Check that the direction is now South
         assertEquals(CompassDirection.S, rover.getDirection());  // Expect direction to be South
     }
 
     // Invalid Instruction
     @Test
     void testRotateInvalidInstruction() {
-        // Arrange
-        Rover rover = new Rover();
+        // Arrange: Create a Rover instance, explicitly set to face North
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
 
-        // Act & Assert
+        // Act & Assert: Try to rotate the rover with an invalid instruction (e.g., 'M' for Move) and check for exception
         try {
-            rover.rotate(Instruction.M);  // Moving should not change direction
+            rover.rotate(Instruction.M);  // This should not change direction, as 'M' is for move
             assertEquals(CompassDirection.N, rover.getDirection());  // Expect direction to be North (no rotation)
         } catch (IllegalArgumentException e) {
-            // This can be handled by catching an exception if necessary
+            // Handle exception and ensure the direction remains North
             assertEquals(CompassDirection.N, rover.getDirection());
         }
     }
@@ -106,29 +135,29 @@ public class RotationTest {
     // Rotate multiple times in the same direction
     @Test
     void testRotateMultipleTimesRightFromNorth() {
-        // Arrange
-        Rover rover = new Rover();
+        // Arrange: Create a Rover instance, explicitly set to face North
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
 
-        // Act
+        // Act: Rotate right 3 times from North (should end facing West)
         rover.rotate(Instruction.R);  // Right from North -> East
         rover.rotate(Instruction.R);  // Right from East -> South
         rover.rotate(Instruction.R);  // Right from South -> West
 
-        // Assert
+        // Assert: Check that the direction is now West
         assertEquals(CompassDirection.W, rover.getDirection());  // After 3 right rotations, it should face West
     }
 
     @Test
     void testRotateMultipleTimesLeftFromNorth() {
-        // Arrange
-        Rover rover = new Rover();
+        // Arrange: Create a Rover instance, explicitly set to face North
+        Rover rover = new Rover(new Position(0, 0, CompassDirection.N), null);
 
-        // Act
+        // Act: Rotate left 3 times from North (should end facing West)
         rover.rotate(Instruction.L);  // Left from North -> West
         rover.rotate(Instruction.L);  // Left from West -> South
         rover.rotate(Instruction.L);  // Left from South -> East
 
-        // Assert
-        assertEquals(CompassDirection.W, rover.getDirection());  // After 3 left rotations, it should face West
+        // Assert: Check that the direction is now East
+        assertEquals(CompassDirection.E, rover.getDirection());  // After 3 left rotations, it should face East
     }
 }

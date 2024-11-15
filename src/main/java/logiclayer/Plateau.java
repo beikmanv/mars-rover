@@ -3,9 +3,17 @@ package logiclayer;
 import inputlayer.data.PlateauSize;
 
 public class Plateau {
-    private final PlateauSize size;
+    private PlateauSize plateauSize;
 
-    public Plateau(PlateauSize size) {
-        this.size = size;
+    public Plateau(PlateauSize plateauSize) {
+        this.plateauSize = plateauSize;
+    }
+
+    public int getWidth() {
+        return plateauSize.getWidth();
+    }
+
+    public int getHeight() {
+        return plateauSize.getHeight();
     }
 }
