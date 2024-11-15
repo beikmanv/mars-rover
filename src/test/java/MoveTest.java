@@ -3,6 +3,7 @@ import logiclayer.Plateau;
 import logiclayer.Position;
 import logiclayer.Rover;
 import inputlayer.data.PlateauSize;
+import inputlayer.data.InitialPosition;  // Corrected import
 import logiclayer.enums.CompassDirection;
 import logiclayer.enums.Instruction;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,7 @@ public class MoveTest {
         PlateauParser plateauParser = new PlateauParser();
         plateau = new Plateau(plateauParser.parsePlateau("5 5"));  // 5x5 plateau
 
-        Position initialPosition = new Position(0, 0, CompassDirection.N);  // Start at position (0, 0) facing North
+        InitialPosition initialPosition = new InitialPosition(0, 0, CompassDirection.N);  // Corrected initialization
         rover = new Rover(initialPosition, plateau);  // Create a rover with the plateau and initial position
     }
 

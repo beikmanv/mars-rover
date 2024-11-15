@@ -24,4 +24,10 @@ public class Position {
     public CompassDirection getFacing() {
         return facing;
     }
+
+    // Override the toString method to return the position in the desired format
+    @Override
+    public String toString() {
+        return x + " " + y + " " + facing;
+    }
 }

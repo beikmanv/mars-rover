@@ -1,5 +1,6 @@
 package logiclayer;
 
+import inputlayer.data.InitialPosition;
 import inputlayer.data.PlateauSize;
 import logiclayer.enums.CompassDirection;
 import logiclayer.enums.Instruction;
@@ -11,8 +12,8 @@ public class Rover {
     private Plateau plateau;
     private CompassDirection direction;
 
-    public Rover(Position position, Plateau plateau) {
-        this.position = position;
+    public Rover(InitialPosition initialPosition, Plateau plateau) {
+        this.position = new Position(initialPosition.getX(), initialPosition.getY(), initialPosition.getFacing());
         this.plateau = plateau;
         this.direction = position.getFacing();
     }
@@ -38,46 +39,33 @@ public class Rover {
     }
 
     public void move() {
-        int x = position.getX();
-        int y = position.getY();
+        int newX = position.getX();
+        int newY = position.getY();
 
-        // Use switch expression with arrow operator to simplify the case logic
+        // Print the current position and direction
+        System.out.print(position.getX() + " " + position.getY() + " " + direction + " -> ");
+
+        // Use the new switch expression with '->' syntax for direction handling
         switch (direction) {
-            case N -> {
-                // Move North: Increase Y-coordinate
-                if (y < plateau.getHeight() - 1) {
-                    position = new Position(x, y + 1, direction);
-                } else {
-                    throw new IllegalArgumentException("Move out of bounds");
-                }
-            }
-            case E -> {
-                // Move East: Increase X-coordinate
-                if (x < plateau.getWidth() - 1) {
-                    position = new Position(x + 1, y, direction);
-                } else {
-                    throw new IllegalArgumentException("Move out of bounds");
-                }
-            }
-            case S -> {
-                // Move South: Decrease Y-coordinate
-                if (y > 0) {
-                    position = new Position(x, y - 1, direction);
-                } else {
-                    throw new IllegalArgumentException("Move out of bounds");
-                }
-            }
-            case W -> {
-                // Move West: Decrease X-coordinate
-                if (x > 0) {
-                    position = new Position(x - 1, y, direction);
-                } else {
-                    throw new IllegalArgumentException("Move out of bounds");
-                }
-            }
-            default -> throw new IllegalArgumentException("Unknown direction");
+            case N -> newY += 1;  // Move North
+            case E -> newX += 1;  // Move East
+            case S -> newY -= 1;  // Move South
+            case W -> newX -= 1;  // Move West
+        }
+
+        // Check if new position is within bounds of the plateau
+        if (newX >= 0 && newY >= 0 && newX <= plateau.getWidth() && newY <= plateau.getHeight()) {
+            // Update position if move is valid
+            position = new Position(newX, newY, direction);
+
+            // Print the updated position after the move
+            System.out.println(position.getX() + " " + position.getY() + " " + direction);
+        } else {
+            // If out of bounds, print a message and no move happens
+            System.out.println("You can't move out of bounds.");
         }
     }
+
 
     public Position getPosition() {
         return position;
