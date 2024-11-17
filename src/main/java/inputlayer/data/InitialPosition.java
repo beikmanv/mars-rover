@@ -19,12 +19,10 @@ public class InitialPosition {
         this.facing = facing;
     }
 
-    // Getter for x
     public int getX() {
         return x;
     }
 
-    // Getter for y
     public int getY() {
         return y;
     }

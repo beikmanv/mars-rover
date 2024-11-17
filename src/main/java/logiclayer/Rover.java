@@ -1,11 +1,8 @@
 package logiclayer;
 
 import inputlayer.data.InitialPosition;
-import inputlayer.data.PlateauSize;
 import logiclayer.enums.CompassDirection;
 import logiclayer.enums.Instruction;
-
-import java.util.concurrent.ConcurrentMap;
 
 public class Rover {
     private Position position;
@@ -45,7 +42,6 @@ public class Rover {
         // Print the current position and direction
         System.out.print(position.getX() + " " + position.getY() + " " + direction + " -> ");
 
-        // Use the new switch expression with '->' syntax for direction handling
         switch (direction) {
             case N -> newY += 1;  // Move North
             case E -> newX += 1;  // Move East
@@ -65,7 +61,6 @@ public class Rover {
             System.out.println("You can't move out of bounds.");
         }
     }
-
 
     public Position getPosition() {
         return position;

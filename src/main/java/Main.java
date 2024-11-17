@@ -10,17 +10,17 @@ import java.util.List;
 public class Main {
 
     public static List<String> processInput(List<String> input) {
-        // Step 1: Parse the plateau size
+        // Parse the plateau size
         String plateauInput = input.get(0);
         PlateauParser plateauParser = new PlateauParser();
         Plateau plateau = new Plateau(plateauParser.parsePlateau(plateauInput));
 
-        // Step 2: Initialize a PositionParser for rover positions
+        // Initialize a PositionParser for rover positions
         PositionParser positionParser = new PositionParser();
 
         List<String> results = new ArrayList<>();
 
-        // Step 3: Process each rover's initial position and instructions
+        // Process each rover's initial position and instructions from input String
         for (int i = 1; i < input.size(); i += 2) {
             String initialPosition = input.get(i);    // Initial position of the rover
             String instructions = input.get(i + 1);   // Instructions for rover
@@ -49,11 +49,11 @@ public class Main {
     public static void main(String[] args) {
         // Example input as given in the brief
         List<String> input = List.of(
-                "5 5",                    // Plateau size: 5x5
-                "1 2 N",                  // Rover 1: Initial position (1, 2) facing North
-                "LMLMLMLMM",              // Rover 1: Instructions
-                "3 3 E",                  // Rover 2: Initial position (3, 3) facing East
-                "MMRMMRMRRM"              // Rover 2: Instructions
+                "5 5",
+                "1 2 N",
+                "LMLMLMLMM",
+                "3 3 E",
+                "MMRMMRMRRM"
         );
 
         // Call processInput to execute the commands

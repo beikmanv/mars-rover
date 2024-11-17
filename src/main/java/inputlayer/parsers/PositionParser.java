@@ -12,7 +12,7 @@ public class PositionParser {
             throw new IllegalArgumentException("Invalid position format. Expected: x y direction.");
         }
 
-        //  Convert x and y into integers
+        // Convert x and y into integers
         int x = Integer.parseInt(splitPosition[0]);
         int y = Integer.parseInt(splitPosition[1]);
 
