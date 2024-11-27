@@ -17,13 +17,13 @@ public class PositionParser {
         int y = Integer.parseInt(splitPosition[1]);
 
         // Convert direction to CompassDirection enum
-        CompassDirection facing;
+        CompassDirection facing = null;
         try {
             facing = CompassDirection.valueOf(splitPosition[2]);
         } catch (IllegalArgumentException e) {
+            // Rethrow the exception with the correct error message
             throw new IllegalArgumentException("Invalid compass direction: " + splitPosition[2]);
         }
-
         return new InitialPosition(x, y, facing);
     }
 }

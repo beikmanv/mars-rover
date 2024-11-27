@@ -21,6 +21,7 @@ public class RotationTest {
         assertEquals(CompassDirection.E, rover.getDirection());  // Expect direction to be East
     }
 
+
     @Test
     void testRotateLeftFromNorth() {
         // Arrange: Create a Rover instance, explicitly set to face North

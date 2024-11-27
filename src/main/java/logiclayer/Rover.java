@@ -9,6 +9,16 @@ public class Rover {
     private Plateau plateau;
     private CompassDirection direction;
 
+    // Accessor for position
+    public Position getPosition() {
+        return position;
+    }
+
+    // Accessor for direction
+    public CompassDirection getDirection() {
+        return direction;
+    }
+
     public Rover(InitialPosition initialPosition, Plateau plateau) {
         this.position = new Position(initialPosition.getX(), initialPosition.getY(), initialPosition.getFacing());
         this.plateau = plateau;
@@ -60,14 +70,6 @@ public class Rover {
             // If out of bounds, print a message and no move happens
             System.out.println("You can't move out of bounds.");
         }
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public CompassDirection getDirection() {
-        return direction;
     }
 
 }

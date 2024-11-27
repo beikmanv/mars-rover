@@ -10,7 +10,7 @@ public class IntegrationTest {
     void testIntegrationWithValidInput() {
         // Arrange: Set up the input data
         List<String> input = Arrays.asList(
-                "5 5",          // Plateau size: 5x5
+                "100 100",          // Plateau size: 100x100
                 "1 2 N",        // Rover 1 starts at (1, 2) facing North
                 "LMLMLMLMM",    // Rover 1: Follow the movement instructions
                 "3 3 E",        // Rover 2 starts at (3, 3) facing East
@@ -98,7 +98,7 @@ public class IntegrationTest {
     void testInvalidMove() {
         // Arrange: Set up the input data with a rover trying to move out of bounds
         List<String> input = Arrays.asList(
-                "5 5",          // Plateau size: 5x5
+                "5 5",          // Plateau size: 6x6
                 "4 4 N",        // Rover starts at (4, 4) facing North
                 "MMMM"          // Rover tries to move out of bounds
         );
@@ -107,6 +107,9 @@ public class IntegrationTest {
         List<String> results = Main.processInput(input);
 
         // Assert: Check if the rover stays within the boundary and does not go out of bounds
+        // Rover should move from (4, 4) to (4, 5) and not go out of bounds
         assertEquals("4 5 N", results.get(0)); // Rover 1 stays at (4, 5) after moving north
     }
+
+
 }

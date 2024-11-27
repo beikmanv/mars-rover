@@ -29,7 +29,7 @@ public class Main {
             Rover rover = new Rover(positionParser.parsePosition(initialPosition), plateau);
 
             // Execute the rover instructions (Move or Rotate)
-            for (char instruction : instructions.toCharArray()) {
+            for (char instruction : instructions.toUpperCase().toCharArray()) {
                 if (instruction == 'M') {
                     rover.move();
                 } else if (instruction == 'L' || instruction == 'R') {
@@ -47,7 +47,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        // Example input as given in the brief
+         // Example input as given in the brief
         List<String> input = List.of(
                 "5 5",
                 "1 2 N",
@@ -55,6 +55,7 @@ public class Main {
                 "3 3 E",
                 "MMRMMRMRRM"
         );
+
 
         // Call processInput to execute the commands
         List<String> results = processInput(input);

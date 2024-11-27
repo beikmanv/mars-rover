@@ -8,6 +8,10 @@ import logiclayer.enums.CompassDirection;
 import logiclayer.enums.Instruction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MoveTest {
@@ -53,22 +57,63 @@ public class MoveTest {
     }
 
     @Test
-    public void testMoveFacingSouth() {
-        // Arrange: Initial state is rover at (0, 0), facing North. We rotate to face South.
-        rover.rotate(Instruction.L);  // Rotate to the left (South)
+    public void testMoveFacingWestOutOfBounds() {
+        // Arrange: Create a plateau and place the rover at (0, 0), facing West.
+        Plateau plateau = new Plateau(new PlateauSize(7, 7));
+        InitialPosition initialPosition = new InitialPosition(0, 0, CompassDirection.W);
+        Rover rover = new Rover(initialPosition, plateau);
 
-        // Act: Try moving the rover South, which should throw an exception because it's out of bounds.
-        // Assert: The move should throw an IllegalArgumentException as it goes out of bounds.
-        assertThrows(IllegalArgumentException.class, rover::move);
+        // Act: Attempt to move west out of bounds.
+        rover.move();
+
+        // Assert 1: Verify the position remains unchanged.
+        Position expectedPosition = new Position(0, 0, CompassDirection.W);
+        assertEquals(expectedPosition, rover.getPosition());
+
     }
 
     @Test
-    public void testMoveOutOfBounds() {
-        // Arrange: Initial state is rover at (0, 0), facing North. We rotate to face South.
-        rover.rotate(Instruction.L);  // Rotate to face South
+    public void testMoveFacingSouthThrowsException() {
+        // Arrange: Create a plateau and place the rover at (0, 0), facing South.
+        Plateau plateau = new Plateau(new PlateauSize(5, 5));
+        InitialPosition initialPosition = new InitialPosition(0, 0, CompassDirection.S);
+        Rover rover = new Rover(initialPosition, plateau);
 
-        // Act: Try moving out of bounds (from (0, 0) to (0, -1), which is out of bounds).
-        // Assert: The move should throw an IllegalArgumentException.
-        assertThrows(IllegalArgumentException.class, rover::move);
+        // Capture the System.out print statements
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+
+        // Act: Attempt to move the rover south (which should print a message)
+        rover.move();
+
+        // Assert: Check the printed message
+        String expectedMessage = "You can't move out of bounds.";
+        assertTrue(outputStream.toString().contains(expectedMessage));
+
+        // Optionally, assert the position remains unchanged
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(CompassDirection.S, rover.getDirection());
+
+        // Reset System.out to its original state
+        System.setOut(System.out);
     }
+
+
+    @Test
+    public void testMoveOutOfBounds() {
+        // Arrange: Initial state is rover at (0, 0), facing North. Rotate to face South.
+        rover.rotate(Instruction.L);  // Rotate twice to face South
+        rover.rotate(Instruction.L);
+
+        // Act: Attempt to move south out of bounds.
+        rover.move();
+
+        // Assert: Verify the position remains unchanged and direction is still South.
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(CompassDirection.S, rover.getDirection());
+    }
+
 }
