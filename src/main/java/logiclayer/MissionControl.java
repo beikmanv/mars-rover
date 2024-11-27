@@ -1,5 +1,7 @@
 package logiclayer;
 
+import logiclayer.enums.Instruction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +34,10 @@ public class MissionControl {
         return true; // Position is empty
     }
 
-    // Process instructions for a given rover
-    public void executeInstructions(Rover rover, String instructions) {
-        for (char instruction : instructions.toCharArray()) {
-            if (instruction == 'M') {
+    // Process instructions for a given rover (with parsed instructions)
+    public void executeInstructions(Rover rover, Instruction[] instructions) {
+        for (Instruction instruction : instructions) {
+            if (instruction == Instruction.M) {
                 // Move the rover and check if the new position is valid
                 Position newPosition = calculateNextPosition(rover);
                 if (isPositionEmpty(newPosition.getX(), newPosition.getY()) &&
@@ -44,8 +46,8 @@ public class MissionControl {
                 } else {
                     System.out.println("Move aborted: Position occupied or out of bounds.");
                 }
-            } else if (instruction == 'L' || instruction == 'R') {
-                rover.rotate(instruction == 'L' ? Instruction.L : Instruction.R); // Rotate the rover
+            } else if (instruction == Instruction.L || instruction == Instruction.R) {
+                rover.rotate(instruction); // Rotate the rover
             } else {
                 throw new IllegalArgumentException("Invalid instruction: " + instruction);
             }

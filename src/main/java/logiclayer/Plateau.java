@@ -16,4 +16,9 @@ public class Plateau {
     public int getHeight() {
         return plateauSize.getHeight();
     }
+
+    // New method to check if a position is within bounds
+    public boolean isWithinBounds(int x, int y) {
+        return x >= 0 && x <= PlateauSize.width && y >= 0 && y <= PlateauSize.height;
+    }
 }

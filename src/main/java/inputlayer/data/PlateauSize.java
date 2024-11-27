@@ -1,8 +1,8 @@
 package inputlayer.data;
 
 public class PlateauSize {
-    private final int width;
-    private final int height;
+    public static int width;
+    public static int height;
 
     public PlateauSize(int width, int height) {
         if (width <= 0 || height <= 0) {
