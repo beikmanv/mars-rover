@@ -55,7 +55,7 @@ public class CommandLineUI {
             // Move the rover with instructions
             boolean continueMoving = true;
             while (continueMoving) {
-                System.out.print("Enter movement instructions (e.g., LMLMLMLMM): ");
+                System.out.print("Enter movement instructions (e.g., LMRLMRRLMMMLMM): ");
                 String instructionsInput = scanner.nextLine();
 
                 try {
@@ -71,18 +71,50 @@ public class CommandLineUI {
                 }
 
                 // Ask user if they want to continue moving the same rover
-                System.out.print("Do you want to continue moving this rover? (yes/no): ");
-                String response = scanner.nextLine().trim().toLowerCase();
-                if (!response.equals("yes")) {
-                    continueMoving = false;
+                boolean validResponse = false;
+                while (!validResponse) {
+                    System.out.print("Do you want to continue moving this rover? (yes/no): ");
+                    String response = scanner.nextLine().trim().toLowerCase();
+                    if (response.equals("yes") || response.equals("y")) {
+                        validResponse = true; // Valid input
+                    } else if (response.equals("no") || response.equals("n")) {
+                        validResponse = true; // Valid input
+                        continueMoving = false; // Stop moving this rover
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    }
                 }
             }
 
             // Ask user if they want to deploy another rover
-            System.out.print("Do you want to deploy another rover? (yes/no): ");
+            boolean validResponse = false;
+            while (!validResponse) {
+                System.out.print("Do you want to deploy another rover? (yes/no): ");
+                String response = scanner.nextLine().trim().toLowerCase();
+                if (response.equals("yes") || response.equals("y")) {
+                    validResponse = true; // Valid input
+                } else if (response.equals("no") || response.equals("n")) {
+                    validResponse = true; // Valid input
+                    continueSimulation = false; // End simulation
+                } else {
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                }
+            }
+        }
+
+        // Step 3: Ask if user wants to see all deployed rovers' positions
+        boolean validResponse = false;
+        while (!validResponse) {
+            System.out.print("Do you want to see all deployed rovers' positions? (yes/no): ");
             String response = scanner.nextLine().trim().toLowerCase();
-            if (!response.equals("yes")) {
-                continueSimulation = false;
+            if (response.equals("yes") || response.equals("y")) {
+                validResponse = true;
+                System.out.println("All deployed rovers' positions:");
+                missionControl.getRovers().forEach(rover -> System.out.println(rover.getPosition()));
+            } else if (response.equals("no") || response.equals("n")) {
+                validResponse = true;
+            } else {
+                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
             }
         }
 
